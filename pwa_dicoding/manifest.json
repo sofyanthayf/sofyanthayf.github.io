@@ -1,0 +1,19 @@
+{
+  "name":"Dicoding Premiere League",
+  "short_name":"Dicoding PL",
+  "description": "England Premiere League PWApp for Dicoding PWA Submission",
+  "start_url": "/index.html",
+  "theme_color":"#e81e62",
+  "background_color":"#e81e62",
+  "display":"standalone",
+  "icons": [
+    {
+      "src":"/img/premier-league-logo-400x400.png",
+      "sizes":"400x400",
+      "type":"image/png"
+    }
+  ],
+
+  "gcm_sender_id": "187210665434"
+
+}

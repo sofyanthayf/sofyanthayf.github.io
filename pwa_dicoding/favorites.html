@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Premiere League</title>
+    <meta name="description" content="Premiere League" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/mystyle.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#e81e62" />
+    <script type="text/javascript" src="js/vendor/idb.js"></script>
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <nav role="navigation">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo" id="logo-container">Premiere League</a>
+        <a href="#" class="sidenav-trigger" data-target="nav-mobile">☰</a>
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul class="sidenav" id="nav-mobile"></ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <div class="container">
+      <div class="rows">
+        <h3>Favorite Matches</h3>
+        <div class="container" id="matches_list"></div>
+      </div>
+    </div>
+
+    <script src="js/materialize.min.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/loadsw.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            dbGetFavoriteMatches();
+        });
+    </script>
+  </body>
+</html>
