@@ -13,6 +13,7 @@ workbox.precaching.precacheAndRoute([
     { url: 'teams.html', revision: '1' },
     { url: 'team.html', revision: '1' },
     { url: 'favorites.html', revision: '1' },
+    { url: 'manifest.json', revision: '1' },
     { url: 'css/materialize.min.css', revision: '1' },
     { url: 'css/mystyle.css', revision: '1' },
     { url: 'js/materialize.min.js', revision: '1' },
