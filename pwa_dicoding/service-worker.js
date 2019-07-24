@@ -7,13 +7,13 @@ else
 
 // precache
 workbox.precaching.precacheAndRoute([
-    { url: 'index.html', revision: '1' },
+    { url: 'index.html', revision: '2' },
     { url: 'nav.html', revision: '1' },
     { url: 'matches.html', revision: '1' },
     { url: 'teams.html', revision: '1' },
     { url: 'team.html', revision: '1' },
     { url: 'favorites.html', revision: '1' },
-    { url: 'manifest.json', revision: '1' },
+    { url: 'manifest.json', revision: '2' },
     { url: 'css/materialize.min.css', revision: '1' },
     { url: 'css/mystyle.css', revision: '1' },
     { url: 'js/materialize.min.js', revision: '1' },
