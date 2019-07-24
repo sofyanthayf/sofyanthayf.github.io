@@ -39,7 +39,7 @@ function dbGetFavoriteMatches() {
     var store = tx.objectStore('fav_matches');
     return store.getAll();
   }).then(function(matches) {
-    console.log(matches);
+    // console.log(matches);
     var matchesHTML = "";
     matches.forEach(function(this_match){
       matchesHTML += `

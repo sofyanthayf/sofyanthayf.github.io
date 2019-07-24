@@ -1,6 +1,12 @@
-var url_competition = "https://api.football-data.org/v2/competitions/2021/";  // 2021 for EPL
-var api_token = "7321b8cd40b443e2a06d3228e0551f73";
-var teams = [];
+const url_competition = "https://api.football-data.org/v2/competitions/2021/";  // 2021 for EPL
+
+const fetchApi = function(url) {
+  return fetch(url, {
+    headers: {
+      'X-Auth-Token': "7321b8cd40b443e2a06d3228e0551f73"
+    }
+  });
+};
 
 function status(response) {
   if (response.status !== 200) {
@@ -20,11 +26,7 @@ function error(error) {
 }
 
 function getStandings() {
-  fetch( url_competition + "standings", {
-    headers: new Headers({
-      'X-Auth-Token': api_token
-    })
-  })
+  fetchApi( url_competition + "standings" )
     .then(status)
     .then(json)
     .then(function(data) {
@@ -72,17 +74,12 @@ function getStandings() {
       });
 
       document.getElementById("last_updated").innerHTML = "Last Updated: " +  data.competition.lastUpdated;
-      // dbAddTeam( teams );
     })
     .catch(error);
 }
 
 function getTeams() {
-  fetch( url_competition + "teams", {
-    headers: new Headers({
-      'X-Auth-Token': api_token
-    })
-  })
+  fetchApi( url_competition + "teams" )
     .then(status)
     .then(json)
     .then(function(data) {
@@ -120,11 +117,7 @@ function getTeams() {
 function getTeamById() {
   var urlParams = new URLSearchParams(window.location.search);
   var idParam = urlParams.get("id");
-  fetch( "https://api.football-data.org/v2/teams/" + idParam , {
-    headers: new Headers({
-      'X-Auth-Token': api_token
-    })
-  })
+  fetchApi( "https://api.football-data.org/v2/teams/" + idParam )
     .then(status)
     .then(json)
     .then(function(data) {
@@ -177,11 +170,7 @@ function getTeamById() {
 }
 
 function getMatches() {
-  fetch( url_competition + "matches", {
-    headers: new Headers({
-      'X-Auth-Token': api_token
-    })
-  })
+  fetchApi( url_competition + "matches" )
     .then(status)
     .then(json)
     .then(function(data) {

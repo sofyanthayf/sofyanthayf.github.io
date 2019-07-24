@@ -1,68 +1,56 @@
-const CACHE_NAME = "dicoding-pl";
-var urlsToCache = [
-  "/",
-  "/nav.html",
-  "/index.html",
-  "/favicon.ico",
-  "/manifest.json",
-  "/css/materialize.min.css",
-  "/css/mystyle.css",
-  "/js/materialize.min.js",
-  "/js/nav.js",
-  "/js/api.js",
-  "/js/db.js",
-  "/js/loadsw.js",
-  "/matches.html",
-  "/teams.html",
-  "/team.html",
-  "/favorites.html",
-];
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
-self.addEventListener("install", function(event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
+if (workbox)
+  console.log('Workbox berhasil dimuat');
+else
+  console.log('Workbox gagal dimuat');
 
-self.addEventListener("fetch", function (event) {
-    event.respondWith(
-        caches.match(event.request, {ignoreSearch: true}).then(function (response) {
-            if (response) {
-                // Jika response dari cache berhasil
-                console.log("Load Page From Cache: " + event.request.url);
-                return response;
-            }
-            // jika response dari cache gagal
-            console.log("Load Page From Server");
-            caches.open(CACHE_NAME).then(function (cache) {
-                return fetch(event.request).then(function (response) {
-                    console.log("Load API Call From Server: " + event.request.url);
-                    cache.put(event.request.url, response.clone());
-                    return response;
-                });
-            })
+// precache
+workbox.precaching.precacheAndRoute([
+    { url: 'index.html', revision: '1' },
+    { url: 'nav.html', revision: '1' },
+    { url: 'matches.html', revision: '1' },
+    { url: 'teams.html', revision: '1' },
+    { url: 'team.html', revision: '1' },
+    { url: 'favorites.html', revision: '1' },
+    { url: 'css/materialize.min.css', revision: '1' },
+    { url: 'css/mystyle.css', revision: '1' },
+    { url: 'js/materialize.min.js', revision: '1' },
+    { url: 'js/nav.js', revision: '1' },
+    { url: 'js/api.js', revision: '1' },
+    { url: 'js/db.js', revision: '1' },
+    { url: 'js/loadsw.js', revision: '1' },
+]);
 
-        })
-    )
-});
+// routing
+workbox.routing.registerRoute(
+  /\.(?:png|gif|jpg|jpeg|svg)$/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 hari
+      }),
+    ],
+  }),
+);
 
-
-self.addEventListener("activate", function(event) {
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheName != CACHE_NAME) {
-            console.log("ServiceWorker: cache " + cacheName + " dihapus");
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});
+workbox.routing.registerRoute(
+  /^https:\/\/upload\.wikimedia\.org/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'wikimedia-team-badges',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 30,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
 
 // notification
 self.addEventListener('push', function(event) {
