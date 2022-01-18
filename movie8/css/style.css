@@ -59,11 +59,6 @@ footer.page-footer {
   margin: 0;
 }
 
-
-.bluechef {
-  background-color: #0000bf;
-}
-
-.bluechef-text {
-  color: #0000bf;
+.moviecard {
+  height: 400px;
 }

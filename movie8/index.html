@@ -17,17 +17,17 @@
         <div class="nav-wrapper container">
             <a href="/movie8" class="brand-logo white-text">PWEB Movie</a>
             <ul class="topnav right hide-on-med-and-down">
-                <li><a href="#" class="white-text">Now Playing</a></li>
-                <li><a href="#" class="white-text">Up Coming</a></li>
-                <li><a href="#" class="white-text">Popular</a></li>
-                <li><a href="#" class="white-text">Top Rated</a></li>
+                <li><a href="#playing" class="white-text">Now Playing</a></li>
+                <li><a href="#upcoming" class="white-text">Up Coming</a></li>
+                <li><a href="#popular" class="white-text">Popular</a></li>
+                <li><a href="#toprated" class="white-text">Top Rated</a></li>
             </ul>
 
             <ul id="nav-mobile" class="sidenav">
-                <li><a href="#">Now Playing</a></li>
-                <li><a href="#">Up Coming</a></li>
-                <li><a href="#">Popular</a></li>
-                <li><a href="#">Top Rated</a></li>
+                <li><a href="#playing">Now Playing</a></li>
+                <li><a href="#upcoming">Up Coming</a></li>
+                <li><a href="#popular">Popular</a></li>
+                <li><a href="#toprated">Top Rated</a></li>
             </ul>
             <a href="#" data-target="nav-mobile" class="sidenav-trigger">
                 <i class="material-icons white-text">menu</i></a>
@@ -37,7 +37,7 @@
     <div id="index-banner" class="parallax-container">
         <div class="section no-pad-bot">
             <div class="container">
-                <h1 class="header center white-text">What is Your Movie</h1>
+                <h1 class="header center white-text">Movie Time</h1>
             </div>
         </div>
         <div class="parallax">
@@ -68,8 +68,46 @@
         document.addEventListener("DOMContentLoaded", function () {
             var page = window.location.hash.substr(1);
 
-            getListMovie();
+            document.querySelectorAll(".topnav a, .sidenav a")
+            .forEach( function(element){
+
+                element.addEventListener("click", function(event){
+                    page = event.target.getAttribute("href").substr(1);
+
+                    switch(page){
+                        case "playing":
+                            getListMovie("movie/now_playing", "Now Playing");
+                            break;
+    
+                        case "upcoming":page
+                            getListMovie("movie/upcoming", "Up Coming");
+                            break;
+                    }
+
+                });
+            } );
+
+            getListMovie("movie/now_playing", "Now Playing");
+            document.getElementById("section_title").innerHTML = sectiontitle;
         });
+    </script>
+
+
+    <script type="text/javascript">
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker
+                    .register("js/sw.js")
+                    .then(function () {
+                        console.log("Pendaftaran ServiceWorker berhasil");
+                    })
+                    .catch(function () {
+                        console.log("Pendaftaran ServiceWorker gagal");
+                    });
+            });
+        } else {
+            console.log("ServiceWorker belum didukung browser ini.");
+        }
     </script>
 
 </body>
